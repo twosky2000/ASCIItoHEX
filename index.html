@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ASCIItoHEX - by Tobias Fellmann</title>
+</head>
+<body>
+
+<p>Simple ASCII to HEX converter for Watchout TCP/UDP commands </p>
+<form id="strform" >
+Name: <input id="namestr" type="text" name="ASCIISTR">
+Data: <input id="datastr" type="text" name="ASCIISTR">
+</br>
+</input>
+<input type="submit" value="Convert">
+</form>
+</br>
+<div id="convertlog">
+</div>
+</body>
+<script>
+function myconvert(e) {
+  e.preventDefault();
+  //alert("test");
+  namestr = document.getElementById("namestr").value;
+  datastr = document.getElementById("datastr").value;
+  //console.log(form2.value);
+  //console.log(window.location.search);
+  output =  document.getElementById("convertlog");
+  textmsg = document.createTextNode(asciitohex(namestr)+"$00"+asciitohex(datastr)+"$00");
+  original= document.createTextNode(namestr+" "+datastr);
+  para1 = document.createElement("P");
+  para2 = document.createElement("P");
+  row  = document.createElement("div");
+  space =document.createElement("br")
+
+  //space.appendChild(document.createTextNode(" "));
+  para1.appendChild(original);
+  para2.appendChild(textmsg);
+  row.appendChild(para1);
+  row.appendChild(para2);
+  row.appendChild(space);
+  output.insertBefore(row,output.childNodes[0]);
+  return false;
+}
+
+
+
+function asciitohex(strin){
+    var tmp = "";
+    var i = 0;
+    for (i = 0; i < strin.length; i++) {
+        tmp += "$" +strin.charCodeAt(i).toString(16);
+        if (strin.charCodeAt(i)>128){
+            alert("character @" + i + "("+ strin[i] + ") does not look like an ASCII Character")
+        }
+    } 
+    return tmp;
+}
+
+function init(){
+   form1 = document.getElementById("strform");
+   console.log(form1);
+   form1.onsubmit = myconvert;
+   
+}
+
+// /hog/playback/go/0
+
+init();
+</script>
+</html>  
